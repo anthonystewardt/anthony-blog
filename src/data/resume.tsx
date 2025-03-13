@@ -20,7 +20,6 @@ export const DATA = {
     "Python",
     "Postgres",
     "Docker",
-    "Kubernetes",
     "C#",
   ],
   navbar: [
@@ -28,19 +27,19 @@ export const DATA = {
     { href: "/blog", icon: NotebookIcon, label: "Blog" },
   ],
   contact: {
-    email: "hello@example.com",
-    tel: "+123456789",
+    email: "anthonysa0813@gmail.com",
+    tel: "+12403152051",
     social: {
       GitHub: {
         name: "GitHub",
-        url: "https://dub.sh/dillion-github",
+        url: "https://github.com/anthonystewardt",
         icon: Icons.github,
 
         navbar: true,
       },
       LinkedIn: {
         name: "LinkedIn",
-        url: "https://dub.sh/dillion-linkedin",
+        url: "https://www.linkedin.com/in/anthony-stewardt-sanchez-yupanqui-62751b1b5/",
         icon: Icons.linkedin,
 
         navbar: true,
@@ -50,13 +49,19 @@ export const DATA = {
         url: "https://dub.sh/dillion-twitter",
         icon: Icons.x,
 
+        navbar: false,
+      },
+      ig: {
+        name: "Instagram",
+        url: "https://www.instagram.com/anthonysanchez2748/",
+        icon: Icons.instagram,
         navbar: true,
       },
       Youtube: {
         name: "Youtube",
         url: "https://dub.sh/dillion-youtube",
         icon: Icons.youtube,
-        navbar: true,
+        navbar: false,
       },
       email: {
         name: "Send Email",
@@ -120,160 +125,187 @@ export const DATA = {
   ],
   education: [
     {
-      school: "Buildspace",
-      href: "https://buildspace.so",
-      degree: "s3, s4, sf1, s5",
-      logoUrl: "/buildspace.jpg",
-      start: "2023",
-      end: "2024",
+      school: "University of tecnologies of Peru",
+      href: "https://utp.edu.pe",
+      target: "_blank",
+      degree: "Software developer (truncate) ", // truncate education degree
+      logoUrl: "/Utplogonuevo.png",
+      start: "2018",
+      end: "2020",
     },
     {
-      school: "University of Waterloo",
-      href: "https://uwaterloo.ca",
-      degree: "Bachelor's Degree of Computer Science (BCS)",
-      logoUrl: "/waterloo.png",
-      start: "2016",
-      end: "2021",
+      school: "Bootcamp - FullStack",
+      href: "https://codeable.la",
+      degree: "Fullstack Developer",
+      logoUrl: "/codeablelog.png",
+      start: "2022",
+      end: "2022",
     },
-    {
-      school: "Wilfrid Laurier University",
-      href: "https://wlu.ca",
-      degree: "Bachelor's Degree of Business Administration (BBA)",
-      logoUrl: "/laurier.png",
-      start: "2016",
-      end: "2021",
-    },
-    {
-      school: "International Baccalaureate",
-      href: "https://ibo.org",
-      degree: "IB Diploma",
-      logoUrl: "/ib.png",
-      start: "2012",
-      end: "2016",
-    },
+
   ],
   projects: [
     {
-      title: "Chat Collect",
-      href: "https://chatcollect.com",
-      dates: "Jan 2024 - Feb 2024",
+      title: "Work Contact Americas",
+      href: "https://work.contactamericas.com",
+      dates: "Aug 2022 - Feb 2023",
       active: true,
       description:
-        "With the release of the [OpenAI GPT Store](https://openai.com/blog/introducing-the-gpt-store), I decided to build a SaaS which allows users to collect email addresses from their GPT users. This is a great way to build an audience and monetize your GPT API usage.",
+        "This project was the first project as a fullstack developer, I implemented a platform where the company can post the job offers and the advisors can apply to the job offers.",
       technologies: [
         "Next.js",
         "Typescript",
-        "PostgreSQL",
-        "Prisma",
+        "MongoDB",
+        "Nodejs",
         "TailwindCSS",
-        "Stripe",
-        "Shadcn UI",
-        "Magic UI",
+        "Next UI"
       ],
       links: [
         {
           type: "Website",
-          href: "https://chatcollect.com",
+          href: "https://work.contactamericas.com",
           icon: <Icons.globe className="size-3" />,
         },
       ],
-      image: "",
+      image: "https://res.cloudinary.com/da0d2neas/image/upload/v1741756114/work.contactamericas.com_.png",
       video:
-        "https://pub-83c5db439b40468498f97946200806f7.r2.dev/chat-collect.mp4",
+        "",
     },
     {
-      title: "Magic UI",
-      href: "https://magicui.design",
-      dates: "June 2023 - Present",
+      title: "Home Security Peru",
+      href: "https://homessperu.com/",
+      dates: "Oct 2024 - December 2024",
       active: true,
       description:
-        "Designed, developed and sold animated UI components for developers.",
+        "Developed a website for a company that sells security systems for homes and businesses. The website was developed using Next.js, Typescript, and TailwindCSS.",
       technologies: [
         "Next.js",
         "Typescript",
         "PostgreSQL",
         "Prisma",
         "TailwindCSS",
-        "Stripe",
-        "Shadcn UI",
         "Magic UI",
       ],
       links: [
         {
           type: "Website",
-          href: "https://magicui.design",
+          href: "https://homessperu.com/",
           icon: <Icons.globe className="size-3" />,
         },
+        // {
+        //   type: "Source",
+        //   href: "https://homessperu.com/",
+        //   icon: <Icons.github className="size-3" />,
+        // },
+      ],
+      image: "https://res.cloudinary.com/da0d2neas/image/upload/v1741756113/homessperu.com_.png",
+      video: "",
+    },
+    {
+      title: "Mi Pata",
+      href: "https://mipata.pe",
+      dates: "April 2023 - May 2023",
+      active: true,
+      description:
+        "Landing page for a mobile application which connects dog owners with dog walkers. The website was developed using Next.js, Typescript, and TailwindCSS.",
+      technologies: [
+        "Next.js",
+        "Typescript",
+        "TailwindCSS"
+      ],
+      links: [
+        {
+          type: "Website",
+          href: "https://mipata.pe",
+          icon: <Icons.globe className="size-3" />,
+        },
+        // {
+        //   type: "Source",
+        //   href: "https://github.com/dillionverma/llm.report",
+        //   icon: <Icons.github className="size-3" />,
+        // },
+      ],
+      image: "https://res.cloudinary.com/da0d2neas/image/upload/v1741756113/mipata.pe_.png",
+      video: "",
+    },
+    {
+      title: "Referreal System",
+      href: "https://referidos.contactamericas.com",
+      dates: "Jun 2024 - Jul 2024",
+      active: true,
+      description:
+        "Build a referreal system for contact americas, where the employee can refer a friend and earn money.",
+      technologies: [
+        "Next.js",
+        "Typescript",
+        "PostgreSQL",
+        "Prisma",
+        "TailwindCSS"
+      ],
+      links: [
+        {
+          type: "Website",
+          //https://referidos.contactamericas.com/auth/login
+          href: "https://referidos.contactamericas.com/auth/login",
+          icon: <Icons.globe className="size-3" />,
+        },
+      ],
+      image: "https://res.cloudinary.com/da0d2neas/image/upload/v1741756113/referidos.contactamericas.com_dashboard.png",
+      video:
+        "",
+    },
+    {
+      title: "E-commerce",
+      href: "",
+      dates: "Jun 2024 - building",
+      active: false,
+      description:
+        "In my free time, I am building an e-commerce website for a friend who sells clothes. The website is being developed using Next.js, Typescript, and TailwindCSS.",
+      technologies: [
+        "Next.js",
+        "Typescript",
+        "PostgreSQL",
+        "Prisma",
+        "TailwindCSS"
+      ],
+      links: [
         {
           type: "Source",
-          href: "https://github.com/magicuidesign/magicui",
+          //https://referidos.contactamericas.com/auth/login
+          href: "https://github.com/anthonystewardt/yurastore",
           icon: <Icons.github className="size-3" />,
         },
       ],
       image: "",
-      video: "https://cdn.magicui.design/bento-grid.mp4",
-    },
-    {
-      title: "llm.report",
-      href: "https://llm.report",
-      dates: "April 2023 - September 2023",
-      active: true,
-      description:
-        "Developed an open-source logging and analytics platform for OpenAI: Log your ChatGPT API requests, analyze costs, and improve your prompts.",
-      technologies: [
-        "Next.js",
-        "Typescript",
-        "PostgreSQL",
-        "Prisma",
-        "TailwindCSS",
-        "Shadcn UI",
-        "Magic UI",
-        "Stripe",
-        "Cloudflare Workers",
-      ],
-      links: [
-        {
-          type: "Website",
-          href: "https://llm.report",
-          icon: <Icons.globe className="size-3" />,
-        },
-        {
-          type: "Source",
-          href: "https://github.com/dillionverma/llm.report",
-          icon: <Icons.github className="size-3" />,
-        },
-      ],
-      image: "",
-      video: "https://cdn.llm.report/openai-demo.mp4",
-    },
-    {
-      title: "Automatic Chat",
-      href: "https://automatic.chat",
-      dates: "April 2023 - March 2024",
-      active: true,
-      description:
-        "Developed an AI Customer Support Chatbot which automatically responds to customer support tickets using the latest GPT models.",
-      technologies: [
-        "Next.js",
-        "Typescript",
-        "PostgreSQL",
-        "Prisma",
-        "TailwindCSS",
-        "Shadcn UI",
-        "Magic UI",
-        "Stripe",
-        "Cloudflare Workers",
-      ],
-      links: [
-        {
-          type: "Website",
-          href: "https://automatic.chat",
-          icon: <Icons.globe className="size-3" />,
-        },
-      ],
-      image: "",
       video:
-        "https://pub-83c5db439b40468498f97946200806f7.r2.dev/automatic-chat.mp4",
+        "https://res.cloudinary.com/da0d2neas/video/upload/v1741757684/WhatsApp_Video_2025-03-12_at_01.31.56.mp4",
+    },
+    {
+      title: "Contact Platform",
+      href: "",
+      dates: "Jun 2024 - Jul 2024",
+      active: true,
+      description:
+        "Contact platform is a platform web  - desktop  for the company Contact Americas, where the advisors can see the reports of the advisors, the supervisors can see the keep alive of the advisors, and the company can manage the advisors and supervisors.",
+      technologies: [
+        "React.js",
+        "Typescript",
+        "SQL Server",
+        ".NET Core",
+        "TailwindCSS",
+        "WPF (Windows Presentation Foundation)",
+        "Running on vpn private server "
+      ],
+      links: [
+        {
+          type: "Website",
+          //https://referidos.contactamericas.com/auth/login
+          href: "https://referidos.contactamericas.com/auth/login",
+          icon: <Icons.vpn className="size-3" />,
+        },
+      ],
+      image: "https://res.cloudinary.com/da0d2neas/image/upload/v1741756114/contact_platform.jpg",
+      video:
+        "",
     },
   ],
   hackathons: [

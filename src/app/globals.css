@@ -134,7 +134,30 @@
   text-align: right;
   color: gray;
 }
+
+h1 {
+  @apply text-3xl font-bold;
+}
+hr {
+  @apply my-3 border-t border-gray-300;
+}
  
+h2 {
+  @apply text-2xl font-semibold;
+}
+
+h3 {
+  @apply text-xl font-semibold;
+}
+
+h4 {
+  @apply text-lg font-semibold;
+}
+
+code[data-line-numbers-max-digits="1"] > [data-line]::before {
+  width: 1rem;
+}
+
 code[data-line-numbers-max-digits="2"] > [data-line]::before {
   width: 2rem;
 }

@@ -1,0 +1,11 @@
+this._qs=this._qs||{};(function(_){var window=this;
+try{
+_.W0q=_.w("LGWZTd",[_.wXa]);
+}catch(e){_._DumpException(e)}
+try{
+_.q("LGWZTd");
+_.Dr(_.W0q,class extends _.Wnj{constructor(a){super(a.Oa)}});
+_.u();
+}catch(e){_._DumpException(e)}
+})(this._qs);
+// Google Inc.

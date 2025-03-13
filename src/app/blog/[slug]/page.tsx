@@ -1,107 +1,97 @@
-import { getBlogPosts, getPost } from "@/data/blog";
-import { DATA } from "@/data/resume";
-import { formatDate } from "@/lib/utils";
-import type { Metadata } from "next";
+// import remark from "remark";
+import prisma from "@/lib/db";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
+import remarkHtml from "remark-html";
+import { formatDate } from '../../../lib/utils';
+import { remark } from "remark";
+import ReactMarkdown from "react-markdown";
+import Link from "next/link";
 
-export async function generateStaticParams() {
-  const posts = await getBlogPosts();
-  return posts.map((post) => ({ slug: post.slug }));
-}
-
-export async function generateMetadata({
-  params,
-}: {
+interface IParams {
   params: {
     slug: string;
-  };
-}): Promise<Metadata | undefined> {
-  let post = await getPost(params.slug);
-
-  let {
-    title,
-    publishedAt: publishedTime,
-    summary: description,
-    image,
-  } = post.metadata;
-  let ogImage = image ? `${DATA.url}${image}` : `${DATA.url}/og?title=${title}`;
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      type: "article",
-      publishedTime,
-      url: `${DATA.url}/blog/${post.slug}`,
-      images: [
-        {
-          url: ogImage,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [ogImage],
-    },
-  };
+  }
 }
 
-export default async function Blog({
-  params,
-}: {
-  params: {
-    slug: string;
-  };
-}) {
-  let post = await getPost(params.slug);
+const getPost = async (slug: string) => {
+  const post = await prisma.post.findUnique({
+    where: {
+      slug
+    }
+  });
+
+  return post;
+}
+
+
+
+const BlogById = async ({ params }: IParams) => {
+
+  const { slug } = params;
+
+  const post = await prisma.post.findUnique({
+    where: {
+      slug
+    }
+  });
+
+  console.log({ post });
 
   if (!post) {
-    notFound();
+    return (
+      notFound()
+    )
   }
 
+  const formatDate = new Date(post.createdAt).toLocaleDateString();
+
+
+  // Convertir el contenido Markdown a HTML
+  const processedContent = await remark()
+    .use(remarkHtml)
+    .process(post.content);
+
+  const contentHtml = processedContent.toString();
+
+
   return (
-    <section id="blog">
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            headline: post.metadata.title,
-            datePublished: post.metadata.publishedAt,
-            dateModified: post.metadata.publishedAt,
-            description: post.metadata.summary,
-            image: post.metadata.image
-              ? `${DATA.url}${post.metadata.image}`
-              : `${DATA.url}/og?title=${post.metadata.title}`,
-            url: `${DATA.url}/blog/${post.slug}`,
-            author: {
-              "@type": "Person",
-              name: DATA.name,
-            },
-          }),
-        }}
-      />
-      <h1 className="title font-medium text-2xl tracking-tighter max-w-[650px]">
-        {post.metadata.title}
-      </h1>
-      <div className="flex justify-between items-center mt-2 mb-8 text-sm max-w-[650px]">
-        <Suspense fallback={<p className="h-5" />}>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400">
-            {formatDate(post.metadata.publishedAt)}
-          </p>
-        </Suspense>
+    <main className=" sm:px-6 md:px-8 xl:px-48 py-24 ">
+      <div className=" inline-flex">
+        <Link href="/blog" className="px-3 py-2 flex  gap-2 bg-slate-300/50 text-slate-800 dark:text-slate-300 rounded-md hover:bg-slate-500/40 transition ease">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.85355 3.14645C7.04882 3.34171 7.04882 3.65829 6.85355 3.85355L3.70711 7H12.5C12.7761 7 13 7.22386 13 7.5C13 7.77614 12.7761 8 12.5 8H3.70711L6.85355 11.1464C7.04882 11.3417 7.04882 11.6583 6.85355 11.8536C6.65829 12.0488 6.34171 12.0488 6.14645 11.8536L2.14645 7.85355C1.95118 7.65829 1.95118 7.34171 2.14645 7.14645L6.14645 3.14645C6.34171 2.95118 6.65829 2.95118 6.85355 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+          <span className="font-semibold text-xs">Back</span>
+        </Link>
       </div>
-      <article
-        className="prose dark:prose-invert"
-        dangerouslySetInnerHTML={{ __html: post.source }}
-      ></article>
-    </section>
-  );
+      <section className="flex flex-col items-center gap-4">
+        <div className="flex gap-3 items-center">
+          <span
+            className="px-2 text-center py-1 text-zinc-800/80 dark:text-slate-50/90 text-sm bg-green-500/50 rounded-md"
+          >{post.published ? "published" : "unpublished"}</span>
+          <span
+            className="px-2 text-center py-1 text-zinc-800 dark:text-slate-50/90 text-sm bg-slate-500/50 rounded-md"
+          >{post.createdAt ? new Date(post.createdAt).toLocaleDateString() : "----"}</span>
+        </div>
+        <h1 className="text-7xl font-bold dark:text-white text-center text-slate-800">{post.title}</h1>
+        <p className="text-lg text-center text-slate-800 dark:text-slate-300">{post.resumen}</p>
+
+        {/* image */}
+        <div className="mt-10">
+          <img src={post.imagePreview} alt={post.title} className="w-full h-[500px] object-cover" />
+        </div>
+
+
+        <div
+          dangerouslySetInnerHTML={{ __html: contentHtml }}
+        />
+
+        {/* <div className="">
+          <ReactMarkdown>{contentHtml}</ReactMarkdown>
+        </div> */}
+
+
+
+      </section>
+    </main>
+  )
 }
+export default BlogById
