@@ -29,9 +29,9 @@ export default async function BlogPage() {
         <h1 className="text-2xl font-light text-slate-50">Anthony S.</h1>
 
         <div className="flex items-center gap-10">
-          <Link href={"/"} className="font-semibold text-white" >
+          <a href={"/"} className="font-semibold text-white" >
             <Button>Home</Button>
-          </Link>
+          </a>
 
         </div>
       </div>
@@ -54,7 +54,7 @@ export default async function BlogPage() {
       <div className="mt-10 sm:px-12 md:px-12 lg:px-32 xl:px-40">
         <h2 className="text-2xl  font-semibold pl-4 ">Latest posts</h2>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
+          {posts.map((post: any) => (
             <div
               key={post.id}
               className="p-4 flex flex-col items-start"

@@ -89,7 +89,7 @@ const CreateBlog = () => {
       formData.append("photo", formValues.imagePreview);
       formData.append("resumen", formValues.resumen);
       formData.append("content", formValues.content);
-      formData.append("authorId", "cm83z53wi000050dev843tvzw");
+      formData.append("authorId", "cmj2dh2830000ut1zfwta8e98");
       formData.append("slug", slugValue);
 
 

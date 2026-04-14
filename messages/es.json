@@ -1,0 +1,85 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "portfolio": "Portafolio",
+    "blog": "Blog",
+    "theme": "Tema"
+  },
+  "landing": {
+    "available": "Disponible para nuevos proyectos",
+    "hero_build": "Construyo",
+    "hero_words": ["páginas web", "apps SaaS", "chatbots IA", "automatizaciones", "tu visión"],
+    "hero_sell": "que",
+    "hero_sell_muted": "venden.",
+    "hero_sub": "Desarrollo web, automatizaciones con IA y soluciones a medida para empresas y emprendedores que quieren escalar su negocio.",
+    "cta_book": "Agendar reunión gratuita",
+    "cta_projects": "Ver proyectos",
+    "trust": ["Primera consulta gratis", "Respuesta en < 24h", "Sin letra chica"],
+    "tech_label": "Stack tecnológico",
+    "stats": [
+      { "label": "Años de experiencia" },
+      { "label": "Proyectos entregados" },
+      { "label": "Clientes satisfechos" },
+      { "label": "Compromiso total" }
+    ],
+    "services_tag": "Servicios",
+    "services_h2a": "Todo lo que necesitas,",
+    "services_h2b": "en un solo lugar",
+    "services_sub": "Me encargo de toda la tecnología para que tú te enfoques en hacer crecer tu negocio.",
+    "services": [
+      { "title": "Páginas Web",        "description": "Sitios modernos, rápidos y optimizados para SEO que convierten visitantes en clientes reales.", "tag": "Landing · Corporativo · E-commerce" },
+      { "title": "Aplicaciones Web",   "description": "Plataformas SaaS y sistemas a medida con arquitecturas robustas, escalables y seguras.", "tag": "SaaS · CRM · ERP · Dashboards" },
+      { "title": "Bases de Datos",     "description": "Diseño, modelado y optimización de bases de datos de alto rendimiento para cualquier escala.", "tag": "PostgreSQL · MySQL · MongoDB" },
+      { "title": "Automatizaciones N8N","description": "Conecta tus herramientas y automatiza procesos repetitivos. Ahorra horas de trabajo manual.", "tag": "N8N · Zapier · Make · APIs" },
+      { "title": "Chatbots con IA",    "description": "Asistentes inteligentes que atienden clientes 24/7, califican leads y resuelven dudas.", "tag": "GPT-4 · Claude · WhatsApp · Web" },
+      { "title": "Soluciones a Medida","description": "¿Tienes un problema único? Construyo la solución técnica exacta que necesitas.", "tag": "Consultoría · Integración · APIs" }
+    ],
+    "process_tag": "Proceso",
+    "process_h2a": "Simple, claro y",
+    "process_h2b": "sin sorpresas",
+    "steps": [
+      { "number": "01", "title": "Consulta gratuita",  "description": "Conversamos sobre tu proyecto, entiendo tus metas y te propongo la solución más efectiva." },
+      { "number": "02", "title": "Desarrollo ágil",    "description": "Entregas iterativas para que veas el progreso real y puedas dar feedback en cada etapa." },
+      { "number": "03", "title": "Entrega y soporte",  "description": "Lanzo tu proyecto, te capacito y te doy soporte continuo. Nunca te quedas solo." }
+    ],
+    "projects_tag": "Proyectos",
+    "projects_h2a": "Trabajo real,",
+    "projects_h2b": "resultados reales",
+    "projects_count_post": "+ proyectos entregados. Desde apps móviles hasta plataformas SaaS.",
+    "projects_see_all": "Ver todos",
+    "projects_see_portfolio": "Ver portafolio completo",
+    "why_tag": "Por qué elegirme",
+    "why_h2a": "No soy una agencia.",
+    "why_h2b": "Soy tu aliado tech.",
+    "why_items": [
+      { "icon": "⚡", "title": "Entrega rápida",        "desc": "Procesos ágiles que van del concepto a producción sin burocracia ni tiempos muertos." },
+      { "icon": "🎯", "title": "Foco en resultados",   "desc": "No construyo código por construirlo. Construyo soluciones que generan impacto en tu negocio." },
+      { "icon": "🔒", "title": "Código de calidad",    "desc": "Arquitecturas limpias, seguras y escalables que crecen junto con tu empresa sin romperse." },
+      { "icon": "🤝", "title": "Comunicación directa", "desc": "Hablas conmigo durante todo el proyecto. Sin intermediarios, sin malentendidos, sin sorpresas." }
+    ],
+    "cta_tag": "Empecemos",
+    "cta_h2a": "¿Listo para llevar tu negocio",
+    "cta_h2b": "al siguiente nivel?",
+    "cta_sub": "Agenda una llamada gratuita de 30 minutos. Sin compromiso, sin letras pequeñas. Solo una conversación sobre tu proyecto.",
+    "cta_book2": "Agendar llamada gratis",
+    "cta_email": "Enviar email directo",
+    "footer_made": "Hecho con 💜 en Lima, Perú.",
+    "footer_contact": "Contacto"
+  },
+  "portfolio": {
+    "greeting": "Hola, soy",
+    "about": "Acerca de mí",
+    "work": "Experiencia laboral",
+    "present": "Presente",
+    "present": "Presente",
+    "education": "Educación",
+    "skills": "Habilidades",
+    "projects_badge": "Mis Proyectos",
+    "projects_h2": "Mira mi trabajo más reciente",
+    "projects_sub": "He trabajado en una variedad de proyectos, desde sitios web simples hasta aplicaciones web complejas. Aquí hay algunos de mis favoritos.",
+    "contact_badge": "Contacto",
+    "contact_h2": "Contáctame",
+    "contact_link": "con un mensaje directo en Instagram",
+    "contact_reply": "y te responderé cuando pueda."
+  }
+}

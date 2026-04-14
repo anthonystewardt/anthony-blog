@@ -1,0 +1,85 @@
+{
+  "nav": {
+    "home": "Home",
+    "portfolio": "Portfolio",
+    "blog": "Blog",
+    "theme": "Theme"
+  },
+  "landing": {
+    "available": "Available for new projects",
+    "hero_build": "I build",
+    "hero_words": ["web pages", "SaaS apps", "AI chatbots", "automations", "your vision"],
+    "hero_sell": "that",
+    "hero_sell_muted": "sell.",
+    "hero_sub": "Web development, AI automations and custom solutions for businesses and entrepreneurs who want to scale.",
+    "cta_book": "Book a free meeting",
+    "cta_projects": "View projects",
+    "trust": ["First consultation free", "Response in < 24h", "No fine print"],
+    "tech_label": "Tech stack",
+    "stats": [
+      { "label": "Years of experience" },
+      { "label": "Projects delivered" },
+      { "label": "Satisfied clients" },
+      { "label": "Total commitment" }
+    ],
+    "services_tag": "Services",
+    "services_h2a": "Everything you need,",
+    "services_h2b": "in one place",
+    "services_sub": "I handle all the technology so you can focus on growing your business.",
+    "services": [
+      { "title": "Web Pages",         "description": "Modern, fast websites optimized for SEO that convert visitors into real clients.", "tag": "Landing · Corporate · E-commerce" },
+      { "title": "Web Applications",  "description": "SaaS platforms and custom systems with robust, scalable and secure architectures.", "tag": "SaaS · CRM · ERP · Dashboards" },
+      { "title": "Databases",         "description": "Design, modeling and optimization of high-performance databases for any scale.", "tag": "PostgreSQL · MySQL · MongoDB" },
+      { "title": "N8N Automations",   "description": "Connect your tools and automate repetitive processes. Save hours of manual work.", "tag": "N8N · Zapier · Make · APIs" },
+      { "title": "AI Chatbots",       "description": "Intelligent assistants that serve clients 24/7, qualify leads and answer questions.", "tag": "GPT-4 · Claude · WhatsApp · Web" },
+      { "title": "Custom Solutions",  "description": "Have a unique problem? I build the exact technical solution you need.", "tag": "Consulting · Integration · APIs" }
+    ],
+    "process_tag": "Process",
+    "process_h2a": "Simple, clear and",
+    "process_h2b": "no surprises",
+    "steps": [
+      { "number": "01", "title": "Free consultation",    "description": "We talk about your project, I understand your goals and propose the most effective solution." },
+      { "number": "02", "title": "Agile development",   "description": "Iterative deliveries so you can see real progress and give feedback at every stage." },
+      { "number": "03", "title": "Delivery & support",  "description": "I launch your project, train you and provide ongoing support. You're never left alone." }
+    ],
+    "projects_tag": "Projects",
+    "projects_h2a": "Real work,",
+    "projects_h2b": "real results",
+    "projects_count_post": "+ projects delivered. From mobile apps to SaaS platforms.",
+    "projects_see_all": "See all",
+    "projects_see_portfolio": "View full portfolio",
+    "why_tag": "Why choose me",
+    "why_h2a": "I'm not an agency.",
+    "why_h2b": "I'm your tech ally.",
+    "why_items": [
+      { "icon": "⚡", "title": "Fast delivery",         "desc": "Agile processes that go from concept to production without bureaucracy or downtime." },
+      { "icon": "🎯", "title": "Results-focused",      "desc": "I don't build code just to build it. I build solutions that generate real impact on your business." },
+      { "icon": "🔒", "title": "Quality code",         "desc": "Clean, secure and scalable architectures that grow with your company without breaking." },
+      { "icon": "🤝", "title": "Direct communication", "desc": "You talk to me throughout the project. No intermediaries, no misunderstandings, no surprises." }
+    ],
+    "cta_tag": "Let's start",
+    "cta_h2a": "Ready to take your business",
+    "cta_h2b": "to the next level?",
+    "cta_sub": "Book a free 30-minute call. No commitment, no fine print. Just a conversation about your project.",
+    "cta_book2": "Book free call",
+    "cta_email": "Send direct email",
+    "footer_made": "Made with 💜 in Lima, Peru.",
+    "footer_contact": "Contact"
+  },
+  "portfolio": {
+    "greeting": "Hi, I'm",
+    "about": "About",
+    "work": "Work Experience",
+    "present": "Present",
+    "present": "Present",
+    "education": "Education",
+    "skills": "Skills",
+    "projects_badge": "My Projects",
+    "projects_h2": "Check out my latest work",
+    "projects_sub": "I've worked on a variety of projects, from simple websites to complex web applications. Here are a few of my favorites.",
+    "contact_badge": "Contact",
+    "contact_h2": "Get in Touch",
+    "contact_link": "with a direct question on Instagram",
+    "contact_reply": "and I'll respond whenever I can."
+  }
+}
