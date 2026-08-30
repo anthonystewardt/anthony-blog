@@ -45,25 +45,25 @@ export default function SubscriberForm() {
       Unirme a la comunidad <ArrowRight className="size-4" />
     </button>
 
-    {open && <div className="fixed inset-0 z-[100] grid place-items-center overflow-y-auto bg-zinc-950/75 p-4 backdrop-blur-md" onMouseDown={event => event.target === event.currentTarget && setOpen(false)}>
-      <section role="dialog" aria-modal="true" aria-labelledby={titleId} className="relative my-6 w-full max-w-4xl overflow-hidden rounded-[28px] border border-white/10 bg-background text-foreground shadow-2xl shadow-violet-950/40">
-        <button type="button" onClick={() => setOpen(false)} aria-label="Cerrar" className="absolute right-4 top-4 z-10 grid size-9 place-items-center rounded-full border border-white/10 bg-black/25 text-white/70 backdrop-blur transition hover:bg-black/45 hover:text-white"><X className="size-4" /></button>
+    {open && <div className="fixed inset-0 z-[100] grid place-items-center overflow-hidden bg-zinc-950/75 p-2 backdrop-blur-md sm:p-4" onMouseDown={event => event.target === event.currentTarget && setOpen(false)}>
+      <section role="dialog" aria-modal="true" aria-labelledby={titleId} className="relative w-full max-w-4xl max-h-[calc(100dvh-1rem)] overflow-y-auto rounded-2xl border border-white/10 bg-background text-foreground shadow-2xl shadow-violet-950/40 sm:max-h-[calc(100dvh-2rem)] sm:rounded-[28px]">
+        <button type="button" onClick={() => setOpen(false)} aria-label="Cerrar" className="absolute right-3 top-3 z-10 grid size-11 place-items-center rounded-full border border-white/10 bg-black/25 text-white/80 backdrop-blur transition hover:bg-black/45 hover:text-white sm:right-4 sm:top-4 sm:size-9"><X className="size-4" /></button>
         <div className="grid md:grid-cols-[.9fr_1.1fr]">
-          <div className="relative overflow-hidden bg-gradient-to-br from-violet-700 via-indigo-700 to-sky-600 p-7 text-white sm:p-10">
+          <div className="relative overflow-hidden bg-gradient-to-br from-violet-700 via-indigo-700 to-sky-600 p-6 text-white sm:p-10">
             <div className="absolute -left-20 -top-20 size-56 rounded-full bg-white/15 blur-3xl" />
             <div className="absolute -bottom-24 -right-20 size-64 rounded-full bg-cyan-300/20 blur-3xl" />
             <div className="relative">
               <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-semibold"><Sparkles className="size-3.5" /> Comunidad educativa</span>
-              <h2 id={titleId} className="mt-8 text-3xl font-black leading-tight sm:text-4xl">Aprende, construye y avanza acompañado.</h2>
+              <h2 id={titleId} className="mt-5 pr-9 text-2xl font-black leading-tight sm:mt-8 sm:pr-0 sm:text-4xl">Aprende, construye y avanza acompañado.</h2>
               <p className="mt-4 text-sm leading-relaxed text-white/75">Recibe solamente contenido nuevo y útil. Sin ruido, sin cadenas y con salida en un clic.</p>
-              <div className="mt-8 space-y-3">
+              <div className="mt-6 hidden space-y-3 sm:block">
                 <p className="flex items-center gap-3 text-sm"><span className="grid size-8 place-items-center rounded-lg bg-white/10"><BookOpenCheck className="size-4" /></span> Nuevas clases y rutas de aprendizaje</p>
                 <p className="flex items-center gap-3 text-sm"><span className="grid size-8 place-items-center rounded-lg bg-white/10"><Code2 className="size-4" /></span> Ejemplos prácticos y apuntes</p>
                 <p className="flex items-center gap-3 text-sm"><span className="grid size-8 place-items-center rounded-lg bg-white/10"><Mail className="size-4" /></span> Avisos únicamente al publicar</p>
               </div>
             </div>
           </div>
-          <div className="flex flex-col justify-center p-7 sm:p-10">
+          <div className="flex flex-col justify-center p-6 sm:p-10">
             {!result ? <>
               <p className="text-xs font-bold uppercase tracking-[.2em] text-violet-500">Tu próxima lección te espera</p>
               <h3 className="mt-3 text-2xl font-bold tracking-tight">Únete gratis a la comunidad</h3>
