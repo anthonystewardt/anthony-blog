@@ -3,8 +3,8 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const OWNER_EMAIL = process.env.RESENT_EMAIL_OWNER ?? "anthonystewardt1996@gmail.com";
-const FROM = "Anthony Portfolio <onboarding@resend.dev>";
+const OWNER_EMAIL = process.env.RESEND_EMAIL_OWNER ?? process.env.RESENT_EMAIL_OWNER ?? "anthonystewardt1996@gmail.com";
+const FROM = `Anthony Portfolio <${process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev"}>`;
 
 /* ── Types ─────────────────────────────────────── */
 interface ContactPayload {

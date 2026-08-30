@@ -5,12 +5,12 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -19,9 +19,59 @@ model User {
   email     String   @unique
   password  String
   role      String   @default("user")
+  bio       String?
+  avatarUrl String?
+  jobTitle  String?
+  website   String?
+  githubUrl String?
+  linkedinUrl String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   posts     Post[]
+}
+
+model PlatformSettings {
+  id              String   @id @default("main")
+  academyName     String   @default("Anthony Academy")
+  tagline         String   @default("Aprende construyendo proyectos reales")
+  description     String?
+  baseUrl         String   @default("http://localhost:3000")
+  senderName      String   @default("Anthony Academy")
+  senderEmail     String   @default("onboarding@resend.dev")
+  replyToEmail    String?
+  notifyOnPublish Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+enum ContentType {
+  ARTICLE
+  CLASS
+  NOTE
+  TUTORIAL
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  description String?
+  color       String   @default("violet")
+  posts       Post[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Series {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  description String?
+  imageUrl    String?
+  published   Boolean  @default(false)
+  posts       Post[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Post {
@@ -32,14 +82,50 @@ model Post {
   slug         String   @unique
   imagePreview String?
   published    Boolean  @default(false)
+  featured     Boolean  @default(false)
+  type         ContentType @default(ARTICLE)
+  youtubeUrl   String?
+  tags         String[] @default([])
+  readingTime  Int      @default(5)
+  seoTitle     String?
+  seoDescription String?
+  publishedAt  DateTime?
+  notificationSentAt DateTime?
+  categoryId   String?
+  category     Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  seriesId     String?
+  series       Series?   @relation(fields: [seriesId], references: [id], onDelete: SetNull)
+  lessonNumber Int?
   authorId     String
   author       User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+
+  @@index([seriesId, lessonNumber])
 }
 
 model Subscriber {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  createdAt DateTime @default(now())
+  id                String    @id @default(uuid())
+  email             String    @unique
+  active            Boolean   @default(false)
+  confirmedAt       DateTime?
+  confirmationToken String    @unique @default(uuid())
+  unsubscribeToken  String    @unique @default(uuid())
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+
+model NewsletterCampaign {
+  id             String   @id @default(uuid())
+  subject        String
+  previewText    String?
+  content        String
+  buttonLabel    String?
+  buttonUrl      String?
+  status         String   @default("DRAFT")
+  recipientCount Int      @default(0)
+  sentAt         DateTime?
+  errorMessage   String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }

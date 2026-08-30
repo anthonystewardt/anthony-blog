@@ -1,39 +1,15 @@
-import prisma from "@/lib/db"
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import DialogDemo from "@/components/ui/modal/Dialog"
-import Link from "next/link"
+import prisma from "@/lib/db";
+import { contentTypes, type ContentTypeKey } from "@/lib/content";
+import { Eye, FileText, PenLine, Plus, Search } from "lucide-react";
+import Link from "next/link";
 
-const BlogPageAdmin = async () => {
+export const dynamic = "force-dynamic";
 
-  const posts = await prisma.post.findMany()
-
-  return (
-    <section>
-      <div className="flex items-center text-sm text-gray-500 gap-2 mb-5 hover:text-gray-900 cursor-pointer transition-all ">
-        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.85355 3.14645C7.04882 3.34171 7.04882 3.65829 6.85355 3.85355L3.70711 7H12.5C12.7761 7 13 7.22386 13 7.5C13 7.77614 12.7761 8 12.5 8H3.70711L6.85355 11.1464C7.04882 11.3417 7.04882 11.6583 6.85355 11.8536C6.65829 12.0488 6.34171 12.0488 6.14645 11.8536L2.14645 7.85355C1.95118 7.65829 1.95118 7.34171 2.14645 7.14645L6.14645 3.14645C6.34171 2.95118 6.65829 2.95118 6.85355 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-        Regresar a home
-      </div>
-
-      <h1 className="text-3xl font-semibold">BLOG</h1>
-      {/* <Button>Nuevo Blog</Button> */}
-      <div className="flex justify-end mt-5  ">
-        {/* <DialogDemo /> */}
-        <Link href='/dashboard/blog/create'>
-          <Button
-            size={'sm'}
-          >Nuevo Blog</Button>
-        </Link>
-      </div>
-    </section>
-  )
+export default async function BlogPageAdmin() {
+  const posts = await prisma.post.findMany({ include: { category: true }, orderBy: { updatedAt: "desc" } });
+  return <section className="space-y-7">
+    <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><p className="text-sm font-medium text-violet-500">Biblioteca</p><h1 className="mt-1 text-3xl font-bold tracking-tight">Contenido</h1><p className="mt-2 text-sm text-muted-foreground">Administra artículos, clases, tutoriales y apuntes.</p></div><Link href="/dashboard/blog/create" className="inline-flex items-center justify-center gap-2 rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white"><Plus className="size-4"/> Nuevo contenido</Link></div>
+    <div className="flex flex-col gap-3 rounded-2xl border bg-card p-4 sm:flex-row sm:items-center"><div className="relative flex-1"><Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"/><input className="h-10 w-full rounded-xl border bg-background pl-10 pr-4 text-sm outline-none focus:ring-2 focus:ring-violet-500/30" placeholder="Buscar por título, etiqueta o categoría…"/></div><div className="flex gap-2">{["Todo","Publicado","Borrador"].map((x,i)=><button key={x} className={`rounded-lg px-3 py-2 text-xs font-medium ${i===0?"bg-foreground text-background":"bg-muted text-muted-foreground"}`}>{x}</button>)}</div></div>
+    <div className="overflow-hidden rounded-2xl border bg-card"><div className="hidden grid-cols-[1fr_130px_150px_120px] border-b bg-muted/40 px-5 py-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground md:grid"><span>Contenido</span><span>Tipo</span><span>Categoría</span><span className="text-right">Acciones</span></div>{posts.length ? posts.map(post=>{const meta=contentTypes[post.type as ContentTypeKey];return <div key={post.id} className="grid gap-4 border-b px-5 py-4 last:border-0 md:grid-cols-[1fr_130px_150px_120px] md:items-center"><div className="flex min-w-0 items-center gap-3"><div className="grid size-11 shrink-0 place-items-center rounded-xl bg-violet-500/10 text-sm font-bold text-violet-500">{meta.icon}</div><div className="min-w-0"><p className="truncate text-sm font-semibold">{post.title}</p><div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground"><span className={`size-1.5 rounded-full ${post.published?"bg-emerald-500":"bg-amber-500"}`}/>{post.published?"Publicado":"Borrador"}<span>·</span>{post.readingTime} min</div></div></div><span className="text-sm text-muted-foreground">{meta.label}</span><span className="text-sm text-muted-foreground">{post.category?.name??"Sin categoría"}</span><div className="flex justify-end gap-1"><Link href={`/blog/${post.slug}`} className="rounded-lg p-2 text-muted-foreground hover:bg-muted" aria-label="Ver"><Eye className="size-4"/></Link><Link href={`/dashboard/blog/${post.id}/edit`} className="rounded-lg p-2 text-muted-foreground hover:bg-muted" aria-label="Editar"><PenLine className="size-4"/></Link></div></div>}):<div className="grid place-items-center px-6 py-20 text-center"><FileText className="mb-4 size-10 text-muted-foreground/30"/><p className="font-semibold">Tu biblioteca está vacía</p><p className="mt-1 text-sm text-muted-foreground">Crea tu primera publicación para comenzar.</p></div>}</div>
+  </section>;
 }
-export default BlogPageAdmin

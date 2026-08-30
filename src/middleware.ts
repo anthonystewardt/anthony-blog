@@ -6,7 +6,7 @@ const locales = ["es", "en"];
 const defaultLocale = "es";
 
 // Paths that should never get a locale prefix
-const SKIP_PREFIXES = ["/api", "/dashboard", "/login", "/register", "/_next", "/favicon"];
+const SKIP_PREFIXES = ["/api", "/blog", "/dashboard", "/login", "/register", "/unsubscribe", "/_next", "/favicon"];
 
 function pathnameHasLocale(pathname: string) {
   return locales.some(
@@ -34,11 +34,14 @@ export default withAuth(
     return NextResponse.redirect(new URL(target, req.url));
   },
   {
+    pages: {
+      signIn: "/login",
+    },
     callbacks: {
       authorized: ({ token, req }) => {
         // Only require auth on dashboard routes
         if (req.nextUrl.pathname.startsWith("/dashboard")) {
-          return !!token;
+          return !!token && token.role === "ADMIN";
         }
         return true;
       },

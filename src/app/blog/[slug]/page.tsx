@@ -1,97 +1,73 @@
-// import remark from "remark";
+import CodeCopy from "@/components/blog/code-copy";
+import SubscriberForm from "@/components/ui/form/subscriber";
+import { markdownToHTML } from "@/data/blog";
+import { contentTypes, getYoutubeId, type ContentTypeKey } from "@/lib/content";
 import prisma from "@/lib/db";
-import { notFound } from "next/navigation";
-import remarkHtml from "remark-html";
-import { formatDate } from '../../../lib/utils';
-import { remark } from "remark";
-import ReactMarkdown from "react-markdown";
+import { formatDate } from "@/lib/utils";
+import { ArrowLeft, ArrowRight, BookOpen, CalendarDays, CheckCircle2, ChevronLeft, ChevronRight, Clock3, Layers3, PlayCircle } from "lucide-react";
+import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
-interface IParams {
-  params: {
-    slug: string;
-  }
+export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const post = await prisma.post.findUnique({ where: { slug: params.slug } });
+  if (!post) return {};
+  return { title: post.seoTitle || post.title, description: post.seoDescription || post.resumen, openGraph: { title: post.seoTitle || post.title, description: post.seoDescription || post.resumen, images: post.imagePreview ? [post.imagePreview] : [] } };
 }
 
-const getPost = async (slug: string) => {
-  const post = await prisma.post.findUnique({
-    where: {
-      slug
-    }
+export default async function ArticlePage({ params }: { params: { slug: string } }) {
+  const post = await prisma.post.findFirst({
+    where: { slug: params.slug, published: true },
+    include: {
+      author: true,
+      category: true,
+      series: { include: { posts: { where: { published: true }, orderBy: [{ lessonNumber: "asc" }, { publishedAt: "asc" }], select: { id: true, title: true, slug: true, lessonNumber: true } } } },
+    },
   });
+  if (!post) notFound();
 
-  return post;
-}
+  const html = await markdownToHTML(post.content);
+  const youtubeId = getYoutubeId(post.youtubeUrl);
+  const meta = contentTypes[post.type as ContentTypeKey];
+  const lessons = post.series?.posts ?? [];
+  const currentIndex = lessons.findIndex(lesson => lesson.id === post.id);
+  const previous = currentIndex > 0 ? lessons[currentIndex - 1] : null;
+  const next = currentIndex >= 0 && currentIndex < lessons.length - 1 ? lessons[currentIndex + 1] : null;
+  const currentPart = currentIndex >= 0 ? currentIndex + 1 : post.lessonNumber;
+  const related = await prisma.post.findMany({ where: { published: true, id: { not: post.id }, ...(post.categoryId ? { categoryId: post.categoryId } : {}) }, take: 3, orderBy: { publishedAt: "desc" } });
 
-
-
-const BlogById = async ({ params }: IParams) => {
-
-  const { slug } = params;
-
-  const post = await prisma.post.findUnique({
-    where: {
-      slug
-    }
-  });
-
-  console.log({ post });
-
-  if (!post) {
-    return (
-      notFound()
-    )
-  }
-
-  const formatDate = new Date(post.createdAt).toLocaleDateString();
-
-
-  // Convertir el contenido Markdown a HTML
-  const processedContent = await remark()
-    .use(remarkHtml)
-    .process(post.content);
-
-  const contentHtml = processedContent.toString();
-
-
-  return (
-    <main className=" sm:px-6 md:px-8 xl:px-48 py-24 ">
-      <div className=" inline-flex">
-        <Link href="/blog" className="px-3 py-2 flex  gap-2 bg-slate-300/50 text-slate-800 dark:text-slate-300 rounded-md hover:bg-slate-500/40 transition ease">
-          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.85355 3.14645C7.04882 3.34171 7.04882 3.65829 6.85355 3.85355L3.70711 7H12.5C12.7761 7 13 7.22386 13 7.5C13 7.77614 12.7761 8 12.5 8H3.70711L6.85355 11.1464C7.04882 11.3417 7.04882 11.6583 6.85355 11.8536C6.65829 12.0488 6.34171 12.0488 6.14645 11.8536L2.14645 7.85355C1.95118 7.65829 1.95118 7.34171 2.14645 7.14645L6.14645 3.14645C6.34171 2.95118 6.65829 2.95118 6.85355 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-          <span className="font-semibold text-xs">Back</span>
-        </Link>
+  return <main>
+    <div className="mx-auto max-w-7xl px-5 py-8"><Link href="/blog" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="size-4" /> Volver a la biblioteca</Link></div>
+    <article>
+      <header className="mx-auto max-w-4xl px-5 pb-10 pt-6 text-center">
+        <div className="flex flex-wrap items-center justify-center gap-2 text-xs font-semibold uppercase tracking-wider text-violet-500"><span>{meta.label}</span><span className="text-border">●</span><span>{post.category?.name ?? "Academia"}</span>{post.series && <><span className="text-border">●</span><span>Parte {currentPart} de {lessons.length}</span></>}</div>
+        {post.series && <Link href={`#programa`} className="mt-5 inline-flex items-center gap-2 rounded-full border border-violet-500/20 bg-violet-500/10 px-4 py-2 text-xs font-medium text-violet-500"><Layers3 className="size-3.5" /> {post.series.title}</Link>}
+        <h1 className="mt-6 text-balance text-4xl font-black tracking-tight sm:text-6xl">{post.title}</h1>
+        <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">{post.resumen}</p>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-5 text-sm text-muted-foreground"><span className="font-medium text-foreground">{post.author.name}</span><span className="flex items-center gap-1.5"><CalendarDays className="size-4" />{formatDate((post.publishedAt ?? post.createdAt).toISOString())}</span><span className="flex items-center gap-1.5"><Clock3 className="size-4" />{post.readingTime} min</span></div>
+      </header>
+      {post.imagePreview && <div className="relative mx-auto aspect-[16/8] max-w-6xl overflow-hidden rounded-3xl bg-muted"><Image src={post.imagePreview} alt={post.title} fill priority className="object-cover" /></div>}
+      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 lg:grid-cols-[minmax(0,760px)_300px] lg:justify-center">
+        <div>
+          {youtubeId && <section className="mb-10 overflow-hidden rounded-2xl border bg-card"><div className="aspect-video"><iframe className="size-full" src={`https://www.youtube-nocookie.com/embed/${youtubeId}`} title={post.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen /></div><div className="flex items-center gap-3 border-t p-4"><PlayCircle className="size-5 text-red-500" /><div><p className="text-sm font-semibold">Video de la clase</p><p className="text-xs text-muted-foreground">Los apuntes y ejemplos están disponibles debajo.</p></div></div></section>}
+          <CodeCopy />
+          <div className="article-content prose prose-zinc max-w-none dark:prose-invert prose-headings:scroll-mt-24 prose-headings:tracking-tight prose-a:text-violet-500 prose-img:rounded-2xl prose-pre:relative" dangerouslySetInnerHTML={{ __html: html }} />
+          <div className="mt-12 flex flex-wrap gap-2 border-t pt-8">{post.tags.map(tag => <span key={tag} className="rounded-full border bg-muted/40 px-3 py-1.5 text-xs text-muted-foreground">#{tag}</span>)}</div>
+          {post.series && <nav className="mt-10 grid gap-3 border-t pt-8 sm:grid-cols-2" aria-label="Navegación del curso">
+            {previous ? <Link href={`/blog/${previous.slug}`} className="group rounded-2xl border bg-card p-5 hover:border-violet-500/40"><span className="flex items-center gap-1 text-xs font-semibold text-muted-foreground"><ChevronLeft className="size-3.5" /> Anterior</span><p className="mt-2 text-sm font-bold group-hover:text-violet-500">Parte {currentIndex}: {previous.title}</p></Link> : <div />}
+            {next ? <Link href={`/blog/${next.slug}`} className="group rounded-2xl border bg-card p-5 text-right hover:border-violet-500/40"><span className="flex items-center justify-end gap-1 text-xs font-semibold text-muted-foreground">Siguiente <ChevronRight className="size-3.5" /></span><p className="mt-2 text-sm font-bold group-hover:text-violet-500">Parte {currentIndex + 2}: {next.title}</p></Link> : <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 text-right"><span className="text-xs font-semibold text-emerald-500">¡Serie completada!</span><p className="mt-2 text-sm font-bold">Llegaste al final del recorrido</p></div>}
+          </nav>}
+        </div>
+        <aside className="space-y-5 lg:sticky lg:top-24 lg:h-fit">
+          {post.series && <div id="programa" className="scroll-mt-24 overflow-hidden rounded-2xl border bg-card"><div className="border-b bg-violet-500/[.06] p-5"><p className="text-xs font-bold uppercase tracking-wider text-violet-500">Programa del curso</p><h2 className="mt-2 font-bold">{post.series.title}</h2><p className="mt-1 text-xs leading-relaxed text-muted-foreground">{post.series.description}</p><div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground"><Layers3 className="size-3.5" /> {lessons.length} partes</div></div><div className="max-h-[360px] overflow-y-auto p-2">{lessons.map((lesson, index) => <Link key={lesson.id} href={`/blog/${lesson.slug}`} className={`flex items-start gap-3 rounded-xl p-3 text-sm transition-colors ${lesson.id === post.id ? "bg-violet-500/10 text-violet-500" : "hover:bg-muted"}`}><span className={`grid size-6 shrink-0 place-items-center rounded-full text-[10px] font-bold ${lesson.id === post.id ? "bg-violet-600 text-white" : "bg-muted text-muted-foreground"}`}>{lesson.id === post.id ? <CheckCircle2 className="size-3.5" /> : index + 1}</span><span className="leading-snug"><small className="mb-0.5 block text-[10px] uppercase opacity-60">Parte {index + 1}</small>{lesson.title}</span></Link>)}</div></div>}
+          <div className="rounded-2xl border bg-card p-5"><p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Tu instructor</p><div className="mt-4 flex items-center gap-3"><div className="grid size-11 place-items-center overflow-hidden rounded-full bg-violet-600 font-bold text-white">{post.author.avatarUrl ? <img src={post.author.avatarUrl} alt={post.author.name} className="size-full object-cover" /> : post.author.name.split(" ").map(word => word[0]).join("").slice(0, 2)}</div><div><p className="font-semibold">{post.author.name}</p><p className="text-xs text-muted-foreground">{post.author.jobTitle ?? "Instructor"}</p></div></div><p className="mt-4 text-sm leading-relaxed text-muted-foreground">{post.author.bio ?? "Comparto aprendizajes prácticos sobre software, producto e inteligencia artificial."}</p><Link href={post.author.website ?? "/es/portfolio"} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-violet-500">Conocer más <ArrowRight className="size-3.5" /></Link></div>
+          <div className="rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-700 p-5 text-white"><BookOpen className="size-5" /><p className="mt-8 font-bold">Recibe nuevas lecciones</p><p className="mb-5 mt-2 text-sm text-white/70">Apuntes, tutoriales y recursos directamente en tu correo.</p><SubscriberForm /></div>
+        </aside>
       </div>
-      <section className="flex flex-col items-center gap-4">
-        <div className="flex gap-3 items-center">
-          <span
-            className="px-2 text-center py-1 text-zinc-800/80 dark:text-slate-50/90 text-sm bg-green-500/50 rounded-md"
-          >{post.published ? "published" : "unpublished"}</span>
-          <span
-            className="px-2 text-center py-1 text-zinc-800 dark:text-slate-50/90 text-sm bg-slate-500/50 rounded-md"
-          >{post.createdAt ? new Date(post.createdAt).toLocaleDateString() : "----"}</span>
-        </div>
-        <h1 className="text-7xl font-bold dark:text-white text-center text-slate-800">{post.title}</h1>
-        <p className="text-lg text-center text-slate-800 dark:text-slate-300">{post.resumen}</p>
-
-        {/* image */}
-        <div className="mt-10">
-          <img src={post.imagePreview} alt={post.title} className="w-full h-[500px] object-cover" />
-        </div>
-
-
-        <div
-          dangerouslySetInnerHTML={{ __html: contentHtml }}
-        />
-
-        {/* <div className="">
-          <ReactMarkdown>{contentHtml}</ReactMarkdown>
-        </div> */}
-
-
-
-      </section>
-    </main>
-  )
+    </article>
+    {related.length > 0 && <section className="border-t bg-muted/20"><div className="mx-auto max-w-7xl px-5 py-14"><h2 className="text-2xl font-bold">Continúa aprendiendo</h2><div className="mt-6 grid gap-4 md:grid-cols-3">{related.map(item => <Link href={`/blog/${item.slug}`} key={item.id} className="rounded-2xl border bg-card p-5 hover:border-violet-500/40"><p className="text-xs font-semibold uppercase text-violet-500">Relacionado</p><h3 className="mt-3 font-bold leading-snug">{item.title}</h3><p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{item.resumen}</p></Link>)}</div></div></section>}
+  </main>;
 }
-export default BlogById

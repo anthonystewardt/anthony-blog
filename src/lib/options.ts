@@ -37,8 +37,6 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Credenciales no válidas");
         }
 
-        console.log("entro aqui")
-
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });

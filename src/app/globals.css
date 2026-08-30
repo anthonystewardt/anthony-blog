@@ -165,3 +165,45 @@ code[data-line-numbers-max-digits="2"] > [data-line]::before {
 code[data-line-numbers-max-digits="3"] > [data-line]::before {
   width: 3rem;
 }
+
+.article-content {
+  font-size: 1.05rem;
+  line-height: 1.85;
+}
+
+.article-content h2 {
+  margin-top: 2.8rem;
+  font-size: 1.8rem;
+}
+
+.article-content h3 {
+  margin-top: 2rem;
+}
+
+.article-content blockquote {
+  border-left-color: rgb(139 92 246);
+  border-radius: 0 0.75rem 0.75rem 0;
+  background: rgb(139 92 246 / 0.08);
+  padding: 1rem 1.25rem;
+  font-style: normal;
+}
+
+.article-content pre {
+  position: relative;
+  border: 1px solid hsl(var(--border));
+  background: hsl(220 18% 8%) !important;
+  padding-top: 3.25rem !important;
+}
+
+.code-copy-button {
+  position: absolute;
+  right: 0.75rem;
+  top: 0.7rem;
+  z-index: 2;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  border-radius: 0.5rem;
+  background: rgb(255 255 255 / 0.08);
+  padding: 0.3rem 0.65rem;
+  color: rgb(255 255 255 / 0.65);
+  font-size: 0.7rem;
+}
